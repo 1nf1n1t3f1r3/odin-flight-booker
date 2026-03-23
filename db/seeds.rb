@@ -8,12 +8,19 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+Flight.destroy_all
 Airport.destroy_all
 
 codes = %w[SFO NYC LAX ORD ATL DFW DEN SEA MIA BOS]
+airports = codes.map { |c| Airport.create!(code: c) }
 
-codes.each do |code|
-  Airport.create!(code: code)
+9.times do
+  Flight.create!(
+    departure_airport: airports.sample,
+    arrival_airport: airports.sample,
+    departure_time: DateTime.now + rand(1..30).days + rand(0..23).hours + rand(0..59).minutes,
+    duration: rand(60..600)
+  )
 end
 
-puts "Created #{Airport.count} airports"
+puts "Created #{Flight.count} flights"
