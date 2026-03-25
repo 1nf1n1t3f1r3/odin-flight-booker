@@ -2,6 +2,12 @@ class FlightsController < ApplicationController
   def index
     @airports = Airport.all.order(:code)
 
+  @available_dates = Flight
+    .pluck(:departure_time)
+    .map { |dt| dt.to_date }
+    .uniq
+    .sort
+
     # Basic search params: departure_airport_id, arrival_airport_id, date
     @flights = Flight.all
 

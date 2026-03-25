@@ -14,10 +14,23 @@
     <%= f.select :arrival_airport_id, options_from_collection_for_select(@airports, :id, :code, params[:arrival_airport_id]), include_blank: "Any" %>
   </div>
 
+ <%# Only Dates where there's a Flight %>
   <div>
-    <%= f.label :date %>
-    <%= f.date_field :date, value: params[:date] %>
+  <%= label_tag :date, "Date" %>
+  <%= select_tag :date,
+      options_for_select(
+        @available_dates.map { |d| [d.strftime("%d %b %Y"), d] },
+        params[:date]
+      ),
+      include_blank: "Any date" %>
   </div>
+
+  <div>
+  <%= label_tag :passengers, "Passengers" %>
+  <%= select_tag :passengers,
+      options_for_select((1..4).to_a, params[:passengers]),
+      include_blank: "Select passengers" %>
+</div>
 
   <div>
     <%= f.submit "Search" %>
