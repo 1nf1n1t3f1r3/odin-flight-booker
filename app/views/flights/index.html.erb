@@ -38,15 +38,30 @@
 <% end %>
 
 <h2>Results</h2>
+<h2>Results</h2>
+
 <% if @flights.any? %>
-  <ul>
+  <%= form_with url: new_booking_path, method: :get, local: true do %>
+    
     <% @flights.each do |flight| %>
-      <li>
-        <%= flight.departure_airport.code %> → <%= flight.arrival_airport.code %> 
-        at <%= flight.departure_time.strftime("%b %d, %Y %H:%M") %>, duration: <%= flight.duration %> mins
-      </li>
+      <div>
+        <%= radio_button_tag :flight_id, flight.id %>
+
+        <%= flight.departure_airport.code %> →
+        <%= flight.arrival_airport.code %>
+
+        at <%= flight.departure_time.strftime("%b %d, %Y %H:%M") %>,
+        duration: <%= flight.duration %> mins
+      </div>
     <% end %>
-  </ul>
+
+    <%= hidden_field_tag :passengers, params[:passengers] %>
+
+    <div>
+      <%= submit_tag "Select Flight" %>
+    </div>
+
+  <% end %>
 <% else %>
   <p>No flights found</p>
 <% end %>

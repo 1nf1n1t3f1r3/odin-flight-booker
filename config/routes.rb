@@ -18,4 +18,6 @@ Rails.application.routes.draw do
 
   resources :flights, only: [ :index ]
 end
+
+resources :bookings, only: [ :new, :create ]
 end
