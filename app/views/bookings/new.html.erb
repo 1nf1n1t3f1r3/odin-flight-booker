@@ -1,0 +1,34 @@
+<h1>Bookings#new</h1>
+<p>Find me in app/views/bookings/new.html.erb</p>
+
+<h1>Passenger Information</h1>
+
+<p>
+  Flight: <%= @flight.departure_airport.code %> → <%= @flight.arrival_airport.code %><br>
+  Date: <%= @flight.departure_time.strftime("%b %d, %Y %H:%M") %><br>
+  Passengers: <%= @booking.passengers.size %>
+</p>
+
+<%= form_with model: @booking, local: true do |f| %>
+
+  <%= f.hidden_field :flight_id, value: @flight.id %>
+
+  <%= f.fields_for :passengers do |p| %>
+    <div style="margin-bottom: 1em; padding: 0.5em; border: 1px solid #ccc;">
+      <p>Passenger <%= p.index + 1 %>:</p>
+      <div>
+        <%= p.label :name %>
+        <%= p.text_field :name %>
+      </div>
+      <div>
+        <%= p.label :email %>
+        <%= p.email_field :email %>
+      </div>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.submit "Book Flight" %>
+  </div>
+
+<% end %>

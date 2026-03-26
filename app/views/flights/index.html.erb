@@ -27,9 +27,8 @@
 
   <div>
   <%= label_tag :passengers, "Passengers" %>
-  <%= select_tag :passengers,
-      options_for_select((1..4).to_a, params[:passengers]),
-      include_blank: "Select passengers" %>
+<%= select_tag :passengers,
+    options_for_select((1..4).to_a, params[:passengers] || 1) %>
 </div>
 
   <div>
