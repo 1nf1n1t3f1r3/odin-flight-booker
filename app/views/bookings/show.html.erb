@@ -1,0 +1,23 @@
+<h1>Booking Confirmation</h1>
+
+<p>
+  Flight: <%= @booking.flight.departure_airport.code %> →
+          <%= @booking.flight.arrival_airport.code %><br>
+
+  Date: <%= @booking.flight.departure_time.strftime("%b %d, %Y %H:%M") %>
+</p>
+
+<h2>Passengers</h2>
+
+<ul>
+  <% @booking.passengers.each do |passenger| %>
+    <li>
+      <strong><%= passenger.name %></strong><br>
+      <%= passenger.email %>
+    </li>
+  <% end %>
+</ul>
+
+<p>
+  Booking ID: <%= @booking.id %>
+</p>

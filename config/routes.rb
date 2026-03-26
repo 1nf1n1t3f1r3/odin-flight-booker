@@ -23,5 +23,5 @@ Rails.application.routes.draw do
   resources :flights, only: [ :index ]
 end
 
-resources :bookings, only: [ :new, :create ]
+resources :bookings, only: [ :new, :create, :show ]
 end
