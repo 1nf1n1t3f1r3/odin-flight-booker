@@ -9,26 +9,51 @@
   Passengers: <%= @booking.passengers.size %>
 </p>
 
-<%= form_with model: @booking, local: true do |f| %>
+<div data-controller="passengers">
+  <%= form_with model: @booking, local: true do |f| %>
 
-  <%= f.hidden_field :flight_id, value: @flight.id %>
+    <%= f.hidden_field :flight_id, value: @flight.id %>
 
-  <%= f.fields_for :passengers do |p| %>
-    <div style="margin-bottom: 1em; padding: 0.5em; border: 1px solid #ccc;">
-      <p>Passenger <%= p.index + 1 %>:</p>
-      <div>
-        <%= p.label :name %>
-        <%= p.text_field :name %>
-      </div>
-      <div>
-        <%= p.label :email %>
-        <%= p.email_field :email %>
-      </div>
+    <div data-passengers-target="container">
+      <%= f.fields_for :passengers do |p| %>
+        <div class="passenger">
+          <p>Passenger <%= p.index + 1 %>:</p>
+
+          <%= p.label :name %>
+          <%= p.text_field :name %>
+
+          <%= p.label :email %>
+          <%= p.email_field :email %>
+
+          <button type="button" data-action="click->passengers#remove">
+            Remove
+          </button>
+        </div>
+      <% end %>
     </div>
-  <% end %>
 
-  <div>
+    <!-- 🔥 TEMPLATE -->
+    <template data-passengers-target="template">
+      <div class="passenger">
+        <p>Passenger NEW_INDEX:</p>
+
+        <label>Name</label>
+        <input type="text" name="booking[passengers_attributes][NEW_INDEX][name]">
+
+        <label>Email</label>
+        <input type="email" name="booking[passengers_attributes][NEW_INDEX][email]">
+
+        <button type="button" data-action="click->passengers#remove">
+          Remove
+        </button>
+      </div>
+    </template>
+
+    <!-- ➕ ADD BUTTON -->
+    <button type="button" data-action="click->passengers#add">
+      Add Passenger
+    </button>
+
     <%= f.submit "Book Flight" %>
-  </div>
-
-<% end %>
+  <% end %>
+</div>
